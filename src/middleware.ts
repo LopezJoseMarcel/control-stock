@@ -1,27 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from 'jose';
 
-const SECRET_KEY = process.env.JWT_SECRET!;
-const protectedRoutes = ['/dashboard', '/api/products'];
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET!);
 
-export function middleware(req: NextRequest) {
+async function verifyToken(token: string) {
+    try {
+        const { payload } = await jwtVerify(token, SECRET_KEY);
+        return payload;
+    } catch (error) {
+        console.error('Error verificando token:', error);
+        return null;
+    }
+}
+
+export async function middleware(req: NextRequest) {
     const token = req.cookies.get('token')?.value;
-    
-    console.log('Ruta solicitada:', req.nextUrl.pathname);
-    console.log('Token recibido:', token);
 
-    if (!token && protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
+    if (!token) {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
-    try {
-        if (!token) {
-            throw new Error('Token is undefined');
-        }
-        const decoded = jwt.verify(token, SECRET_KEY);
-        console.log('Token válido:', decoded);
-    } catch (error) {
-        console.error('Error verificando token:', error);
+    const payload = await verifyToken(token);
+
+    if (!payload) {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
