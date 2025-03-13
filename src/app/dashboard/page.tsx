@@ -1,8 +1,17 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+interface Product {
+    _id: string;
+    name: string;
+    sku: string;
+    price: number;
+    cost: number;
+    quantity: number;
+}
+
 export default function Dashboard() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const [newProduct, setNewProduct] = useState({
         name: '',
         sku: '',
@@ -131,7 +140,7 @@ export default function Dashboard() {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product: any) => (
+                    {products.map((product) => (
                         <tr key={product._id}>
                             <td className="border px-4 py-2">{product.name}</td>
                             <td className="border px-4 py-2">{product.sku}</td>
