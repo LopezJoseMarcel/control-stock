@@ -6,6 +6,7 @@ const productSchema = new Schema({
     price: { type: Number, required: true },
     cost: { type: Number, required: true },
     quantity: { type: Number, required: true },
+    laboratorio:{ type: String, required: true },
 }, { timestamps: true });
 
-export default models.Product || model('Product', productSchema, 'Product');
+export default models.Products || model('Products', productSchema, 'Products');

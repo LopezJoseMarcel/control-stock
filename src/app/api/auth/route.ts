@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Credenciales inválidas' }, { status: 401 });
     }
 
-    const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: '5d' });
 
     const response = NextResponse.json({ message: 'Login exitoso' });
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         secure: process.env.NODE_ENV === 'production', // 🔒 Requiere HTTPS en producción
         sameSite: 'strict',    // 🔒 Evita envíos no autorizados
         path: '/',             // 🌍 Accesible en todas las rutas
-        maxAge: 60 * 60,       // 🕒 Expira en 1 hora
+        maxAge: 5 * 24 * 60 * 60,       // 🕒 Expira en 1 hora
     });
 
     return response;
