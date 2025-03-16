@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Stock actualizado correctamente' });
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     await connectDB();
 
     const updates = await StockActuali.find().populate('productId');

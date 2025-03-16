@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Venta registrada correctamente' });
 }
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     await connectDB();
 
     const sales = await Sale.find().populate('productId');

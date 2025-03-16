@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const day = searchParams.get("day");
 
     // Construcción de filtro de fecha
-    let dateFilter: any = {};
+    const dateFilter: { $gte?: Date; $lt?: Date } = {};
     if (year) dateFilter.$gte = new Date(`${year}-01-01`);
     if (month) dateFilter.$gte = new Date(`${year}-${month}-01`);
     if (day) dateFilter.$gte = new Date(`${year}-${month}-${day}`);

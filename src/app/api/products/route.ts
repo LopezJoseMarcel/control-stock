@@ -5,7 +5,7 @@ import Product from '@/models/Product';
 export async function POST(req: NextRequest) {
     await connectDB();
     
-    const { name,laboratorio, sku, price, cost, quantity,tipo } = await req.json();
+    const { name,laboratorio, sku, price, cost, quantity } = await req.json();
 
     // Verificar que no exista el SKU
     const existingProduct = await Product.findOne({ sku });
