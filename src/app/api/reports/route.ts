@@ -76,6 +76,7 @@ export async function GET(req: NextRequest) {
       }
     });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: "Error obteniendo datos" }, { status: 500 });
   }
 }
